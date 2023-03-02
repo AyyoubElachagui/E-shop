@@ -67,8 +67,7 @@
 			</div>
 		</div>
 		<p class="italic font-xs underline mb-4"><%=BD.nombreProduits()%>
-			produits > aux panier
-			<%=BD.getLigneCommandes().size()%>
+			produits
 		</p>
 		<section class="bg-gray-100">
 			<div
