@@ -1,5 +1,8 @@
 package com.lus.dawm.classes;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +12,23 @@ import com.lus.dawm.models.Panier;
 import com.lus.dawm.models.Produit;
 
 public class BD {
+	private static Connection connection;
+	
+	private BD() throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.jdbc.Driver");
+		connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/eshop", "root", "");
+	}
+	
+	public static Connection getInstance() throws ClassNotFoundException, SQLException {
+		
+		if(connection == null)
+			new BD();
+		
+		return connection;
+		
+	}
+	
+	
 	
 	private static List<Produit> produits = new ArrayList<Produit>();
 	private static List<Categorie> categories = new ArrayList<Categorie>();

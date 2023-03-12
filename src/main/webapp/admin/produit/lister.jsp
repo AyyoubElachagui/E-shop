@@ -1,3 +1,4 @@
+<%@page import="com.lus.dawm.dao.DAOProduit"%>
 <%@page import="com.lus.dawm.models.Produit"%>
 <%@page import="java.util.List"%>
 <%@page import="com.lus.dawm.classes.BD"%>
@@ -117,6 +118,93 @@
 				<%
 				}
 				%>
+			</div>
+		</section>
+
+
+		<section class="bg-gray-100 mt-10">
+			<div
+				class="mx-auto grid max-w-6xl  grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+
+				<%
+				DAOProduit dp = new DAOProduit();
+				for (Produit produit : dp.list()) {
+				%>
+				<article
+					class="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 ">
+					<div class="relative flex items-end overflow-hidden rounded-xl">
+						<img src="https://source.unsplash.com/random/300x200"
+							alt="Hotel Photo" />
+					</div>
+
+					<div class="mt-1 p-2">
+						<h2 class="text-slate-700"><%=produit.getDesignation()%></h2>
+						<p class="mt-1 text-sm text-slate-400"><%=produit.getDescription().substring(0,15)%>...</p>
+
+						<div class="mt-3">
+							<p class="text-lg font-bold text-blue-500 mb-3">
+								$<%=produit.getPrix()%></p>
+							<form action="<%request.getContextPath();%>/tp1/ajouter/panier"
+								method="POST">
+								<div
+									class="flex items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600">
+
+
+									<input type="hidden"
+										value="<%=produit.getId()%>"
+										name="idpro_panier" />
+
+									<svg xmlns="http://www.w3.org/2000/svg" fill="none"
+										viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+										class="h-4 w-4">
+							                <path stroke-linecap="round"
+											stroke-linejoin="round"
+											d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+							            </svg>
+
+									<button class="text-sm">Ajouter au panier</button>
+
+								</div>
+							</form>
+						</div>
+						<div class="mt-1">
+							<form action="<%request.getContextPath();%>/tp1/produit/supprimer"
+								method="POST">
+								<div
+									class="flex items-center space-x-1.5 rounded-lg bg-red-500 px-4 py-1.5 text-white duration-100 hover:bg-red-600">
+
+
+									<input type="hidden"
+										value="<%=produit.getId()%>"
+										name="idPro" />
+
+									<svg class="h-4 w-4" viewBox="0 0 1024 1024" fill="#ffffff" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+									
+										<g id="SVGRepo_bgCarrier" stroke-width="0"/>
+										
+										<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+										
+										<g id="SVGRepo_iconCarrier">
+										
+										<path d="M32 241.6c-11.2 0-20-8.8-20-20s8.8-20 20-20l940 1.6c11.2 0 20 8.8 20 20s-8.8 20-20 20L32 241.6zM186.4 282.4c0-11.2 8.8-20 20-20s20 8.8 20 20v688.8l585.6-6.4V289.6c0-11.2 8.8-20 20-20s20 8.8 20 20v716.8l-666.4 7.2V282.4z" fill=""/>
+										
+										<path d="M682.4 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM367.2 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM524.8 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM655.2 213.6v-48.8c0-17.6-14.4-32-32-32H418.4c-18.4 0-32 14.4-32 32.8V208h-40v-42.4c0-40 32.8-72.8 72.8-72.8H624c40 0 72.8 32.8 72.8 72.8v48.8h-41.6z" fill=""/>
+										
+										</g>
+									
+									</svg>
+
+									<button class="text-sm">Supprimer Produit</button>
+
+								</div>
+							</form>
+						</div>
+					</div>
+				</article>
+				<%
+				}
+				%>
+
 			</div>
 		</section>
 	</div>

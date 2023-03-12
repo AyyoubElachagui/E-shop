@@ -5,6 +5,7 @@ public class Produit {
 	private String designation;
 	private String description;
 	private int qte;
+	private double prix;
 	
 	public int getId() {
 		return id;
@@ -39,6 +40,15 @@ public class Produit {
 	
 	public void setQte(int qte) {
 		this.qte = qte;
+	}
+	
+	
+	public double getPrix() {
+		return prix;
+	}
+	
+	public void setPrix(double prix) {
+		this.prix = prix;
 	}
 	
 }

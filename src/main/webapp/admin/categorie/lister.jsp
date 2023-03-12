@@ -63,7 +63,7 @@
 				</span>
 			</div>
 		</div>
-		<p class="italic font-xs underline mb-4"><%= BD.nombreCategories() %>
+		<p class="italic font-xs underline mb-4"><%=BD.nombreCategories()%>
 			categories
 		</p>
 		<section class="bg-gray-100">
@@ -74,27 +74,27 @@
 				%>
 				<article
 					class="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 ">
-					<a href="#">
-						<div class="relative flex items-end overflow-hidden rounded-xl">
-							<img src="https://source.unsplash.com/random/300x200"
-								alt="Hotel Photo" />
-						</div>
+					<div class="relative flex items-end overflow-hidden rounded-xl">
+						<img src="https://source.unsplash.com/random/300x200"
+							alt="Hotel Photo" />
+					</div>
 
-						<div class="mt-1 p-2">
-							<h2 class="text-slate-700"><%=BD.getCategories().get(i).getDesignation()%></h2>
-							<p class="mt-1 text-sm text-slate-400"><%=BD.getCategories().get(i).getDesignation()%></p>
+					<div class="mt-1 p-2">
+						<h2 class="text-slate-700"><%=BD.getCategories().get(i).getDesignation()%></h2>
+						<p class="mt-1 text-sm text-slate-400"><%=BD.getCategories().get(i).getDesignation()%></p>
 
-							<div class="mt-3 flex items-end justify-between">							
-								<div
-									class="flex items-center space-x-1.5 rounded-lg bg-red-400 px-4 py-1.5 text-white duration-100 hover:bg-red-600">
-									<form action="<% request.getContextPath(); %>/tp1/supprimer/categorie" method="POST">
-						            	<input type="hidden" value="<%= i %>" name="indexCat" />						            	
-										<button type="submit" class="text-sm">Supprimer</button>
-						            </form>
-								</div>
+						<div class="mt-3 flex items-end justify-between">
+							<div
+								class="flex items-center space-x-1.5 rounded-lg bg-red-400 px-4 py-1.5 text-white duration-100 hover:bg-red-600">
+								<form
+									action="<%request.getContextPath();%>/tp1/supprimer/categorie"
+									method="POST">
+									<input type="hidden" value="<%=i%>" name="indexCat" />
+									<button type="submit" class="text-sm">Supprimer</button>
+								</form>
 							</div>
 						</div>
-					</a>
+					</div>
 				</article>
 				<%
 				}

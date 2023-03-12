@@ -2,6 +2,7 @@ package com.lus.dawm.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.lus.dawm.dao.DAOUtilisateur;
 import com.lus.dawm.models.Categorie;
 import com.lus.dawm.models.LigneCommande;
 import com.lus.dawm.models.Panier;
@@ -45,9 +47,17 @@ public class UtilisateurController extends HttpServlet {
 		
 		resp.setContentType("text/html");
 		
-		PrintWriter pw = resp.getWriter();
+		PrintWriter pw = resp.getWriter();  
+		Utilisateur us = new Utilisateur();
+		try {
+			DAOUtilisateur daoU = new DAOUtilisateur();
+			us = daoU.auth(username, password);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 		
-		if(username.equals("admin") && password.equals("root")) {
+		
+		if(us.getUsername() != null) {
 			resp.sendRedirect("./admin/dashboard.jsp");
 			Utilisateur user = new Utilisateur();
 			user.setUsername("Ayyoub Elachagui");
