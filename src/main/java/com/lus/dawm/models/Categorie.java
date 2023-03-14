@@ -1,17 +1,58 @@
 package com.lus.dawm.models;
 
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Categorie {
-	private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 	private String designation;
 	private String description;
-	private int idCategorie;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Categorie categorie;
+
+	@ManyToMany
+	@JoinTable(
+	  name = "produit_category",
+	  joinColumns = @JoinColumn(name = "produit_id", referencedColumnName = "id"),
+	  inverseJoinColumns = @JoinColumn(name = "categorie_id", referencedColumnName = "id")
+	)
+	private List<Produit> produits;
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
+	}
+
+	public Categorie getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
+
+	public List<Produit> getProduits() {
+		return produits;
+	}
+
+	public void setProduits(List<Produit> produits) {
+		this.produits = produits;
 	}
 	
 	
@@ -30,15 +71,6 @@ public class Categorie {
 	
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	
-	
-	public int getIdCategorie() {
-		return idCategorie;
-	}
-	
-	public void setIdCategorie(int idCategorie) {
-		this.idCategorie = idCategorie;
 	}
 
 }

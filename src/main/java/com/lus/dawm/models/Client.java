@@ -1,10 +1,35 @@
 package com.lus.dawm.models;
 
-public class Client extends Utilisateur {
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+@Entity
+public class Client extends Utilisateur implements Serializable {
+	
+	
 	private String email;
 	private String adresse;
 	private String dateNaissance;
 	
+	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+	private List<Commande> commandes;
+	
+	@OneToOne(mappedBy = "client")
+	private Panier panier;
+	
+	public Panier getPanier() {
+		return panier;
+	}
+
+	public void setPanier(Panier panier) {
+		this.panier = panier;
+	}
+
 	public String getEmail() {
 		return email;
 	}

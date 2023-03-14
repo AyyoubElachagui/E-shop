@@ -1,28 +1,51 @@
 package com.lus.dawm.models;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
-public class Commande {
-	private int id;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+
+@Entity
+public class Commande implements Serializable{
+	@Id
+	private long id;
 	private LocalDateTime dateCreation;
 	private LocalDateTime dateLivraison;
 	private String adresseLivraison;
-	private int idClient;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Client client;
+	
+	@OneToMany(mappedBy = "commande", fetch = FetchType.EAGER)
+	private List<LigneCommande> listLigneCommande;
 	
 
-	public int getIdClient() {
-		return idClient;
+	public List<LigneCommande> getListLigneCommande() {
+		return listLigneCommande;
 	}
 
-	public void setIdClient(int idClient) {
-		this.idClient = idClient;
+	public void setListLigneCommande(List<LigneCommande> listLigneCommande) {
+		this.listLigneCommande = listLigneCommande;
 	}
-	
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public void setId(long id) {
 		this.id = id;
 	}
 	

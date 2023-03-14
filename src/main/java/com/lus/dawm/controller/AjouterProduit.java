@@ -28,7 +28,6 @@ public class AjouterProduit extends HttpServlet {
 		String qte = req.getParameter("qte");
 		
 		Produit produit = new Produit();
-		produit.setPrix(Double.parseDouble(idPro));
 		produit.setDesignation(designation);
 		produit.setDescription(description);
 		produit.setQte(Integer.parseInt(qte));

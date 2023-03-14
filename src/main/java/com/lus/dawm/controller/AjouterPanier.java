@@ -30,10 +30,9 @@ public class AjouterPanier extends HttpServlet{
 		
 		LigneCommande lc = new LigneCommande();
 		
-		lc.setIdPanier(1);
+		
 		lc.setPrix(price);
 		lc.setQte(qte);
-		lc.setIdProduit(Integer.parseInt(idPro));
 		
 		BD.addLigneCommande(lc);
 		

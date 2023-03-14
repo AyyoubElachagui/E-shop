@@ -36,7 +36,6 @@ public class DAOProduit {
 			 pro.setDesignation(rs.getString("designation"));
 			 pro.setDescription(rs.getString("description"));
 			 pro.setQte(rs.getInt("qte"));
-			 pro.setPrix(rs.getDouble("prix"));
 			 
 			 lp.add(pro);
 		 }
@@ -62,9 +61,7 @@ public class DAOProduit {
 		
 		PreparedStatement ps = connection.prepareStatement(sql);
 		ps.setString(1, produit.getDesignation());
-		ps.setDouble(2, produit.getPrix());
 		ps.setString(3, produit.getDescription());
-		ps.setInt(4, produit.getId());
 		
 		int result = ps.executeUpdate();
 		
