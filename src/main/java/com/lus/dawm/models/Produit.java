@@ -18,7 +18,27 @@ public class Produit implements Serializable  {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
+	public List<LigneCommande> getListLigneCommande() {
+		return listLigneCommande;
+	}
+
+	public void setListLigneCommande(List<LigneCommande> listLigneCommande) {
+		this.listLigneCommande = listLigneCommande;
+	}
+
+	public List<Categorie> getCategories() {
+		return Categories;
+	}
+
+	public void setCategories(List<Categorie> categories) {
+		Categories = categories;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	private String designation;
 	private String description;
 	private int qte;

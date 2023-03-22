@@ -1,8 +1,6 @@
 package com.lus.dawm.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
@@ -10,37 +8,38 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.lus.dawm.classes.BD;
-import com.lus.dawm.dao.DAOProduit;
-import com.lus.dawm.models.Produit;
+import com.lus.dawm.models.Categorie;
 import com.lus.dawm.utils.EMFUtil;
 
-@WebServlet("/ajouter/produit")
-public class AjouterProduit extends HttpServlet {
+@WebServlet("/edit/categorie")
+public class EditCategorie extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		EntityManager em = EMFUtil.getEMFactory().createEntityManager();
+		
+		Long indexCat = Long.parseLong(req.getParameter("indexCat"));
 		String designation = req.getParameter("designation");
 		String description = req.getParameter("description");
-		String qte = req.getParameter("qte");
-		
-		Produit produit = new Produit();
-		produit.setDesignation(designation);
-		produit.setDescription(description);
-		produit.setQte(Integer.parseInt(qte));
-		
+
 		em.getTransaction().begin();
 		
-		em.persist(produit);
-		
-		em.getTransaction (). commit ();
-		
-		resp.sendRedirect(req.getContextPath()+"/admin/produit/lister.jsp");
+		Categorie categorie = em.find(Categorie.class, indexCat);
+		if(categorie != null) {
+			categorie.setDesignation(designation);
+			categorie.setDescription(description);
+			em.flush();
+			em.getTransaction (). commit ();
+		}
+
+		resp.sendRedirect(req.getContextPath()+"/admin/categorie/lister.jsp");
 	}
 
-	
-	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		super.doGet(req, resp);
+	}
+
 }

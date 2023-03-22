@@ -1,3 +1,6 @@
+<%@page import="com.lus.dawm.models.Categorie"%>
+<%@page import="java.util.List"%>
+<%@page import="com.lus.dawm.utils.DataStore"%>
 <%@page import="com.lus.dawm.classes.BD"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -9,7 +12,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="body bg-white dark:bg-[#0F172A]">
-
+<% List<Categorie> categories = DataStore.listCategories(); %>
 	<jsp:include page="../../layouts/navbar.jsp"></jsp:include>
 	<jsp:include page="../../layouts/sidebar.jsp"></jsp:include>
 	<div
@@ -63,14 +66,14 @@
 				</span>
 			</div>
 		</div>
-		<p class="italic font-xs underline mb-4"><%=BD.nombreCategories()%>
+		<p class="italic font-xs underline mb-4"><%=categories.size()%>
 			categories
 		</p>
 		<section class="bg-gray-100">
 			<div
 				class="mx-auto grid max-w-6xl  grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 				<%
-				for (int i = 0; i < BD.nombreCategories(); i++) {
+				for (Categorie categorie: categories) {
 				%>
 				<article
 					class="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 ">
@@ -80,8 +83,8 @@
 					</div>
 
 					<div class="mt-1 p-2">
-						<h2 class="text-slate-700"><%=BD.getCategories().get(i).getDesignation()%></h2>
-						<p class="mt-1 text-sm text-slate-400"><%=BD.getCategories().get(i).getDesignation()%></p>
+						<h2 class="text-slate-700"><%=categorie.getDesignation()%></h2>
+						<p class="mt-1 text-sm text-slate-400"><%=categorie.getDesignation()%></p>
 
 						<div class="mt-3 flex items-end justify-between">
 							<div
@@ -89,8 +92,17 @@
 								<form
 									action="<%request.getContextPath();%>/tp1/supprimer/categorie"
 									method="POST">
-									<input type="hidden" value="<%=i%>" name="indexCat" />
+									<input type="hidden" value="<%=categorie.getId()%>" name="indexCat" />
 									<button type="submit" class="text-sm">Supprimer</button>
+								</form>
+							</div>
+							<div
+								class="flex items-center space-x-1.5 rounded-lg bg-blue-400 px-4 py-1.5 text-white duration-100 hover:bg-blue-600">
+								<form
+									action="<%request.getContextPath();%>/tp1/admin/categorie/edit.jsp"
+									method="get">
+									<% DataStore.setCategorie(categorie); %>
+									<button type="submit" class="text-sm">Edit</button>
 								</form>
 							</div>
 						</div>

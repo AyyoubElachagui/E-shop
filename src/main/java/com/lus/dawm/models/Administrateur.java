@@ -2,7 +2,6 @@ package com.lus.dawm.models;
 
 import java.io.Serializable;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 

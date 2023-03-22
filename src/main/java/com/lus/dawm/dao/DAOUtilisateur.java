@@ -45,7 +45,7 @@ public class DAOUtilisateur {
 		Utilisateur user = new Utilisateur();
 		
 		if(rs.next()) {
-			user.setId(rs.getInt("id"));
+			user.setId(rs.getLong("id"));
 			user.setPwd(rs.getString("pwd"));
 			user.setUsername(rs.getString("username"));
 			return user;

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.lus.dawm.models.Utilisateur;
+import com.lus.dawm.utils.DataStore;
 
 /**
  * Servlet Filter implementation class AuthMiddleware
@@ -30,11 +31,7 @@ public class AuthMiddleware extends HttpFilter implements Filter {
 		HttpServletRequest httpReq = (HttpServletRequest) request;
 		HttpServletResponse httpRes = (HttpServletResponse) response;
 		
-		HttpSession session = httpReq.getSession();
-		
-		Utilisateur user = (Utilisateur) session.getAttribute("user");
-		
-		if(user != null) {
+		if(DataStore.getUser() != null) {
 			chain.doFilter(request, response);
 		}else {
 			httpRes.sendRedirect(httpReq.getContextPath()+"/auth/login.html");

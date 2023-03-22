@@ -14,7 +14,7 @@ public class LigneCommande implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	private int qte;
 	private double prix;
 

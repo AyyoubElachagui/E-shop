@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +21,9 @@ import com.lus.dawm.models.LigneCommande;
 import com.lus.dawm.models.Panier;
 import com.lus.dawm.models.Produit;
 import com.lus.dawm.models.Utilisateur;
+import com.lus.dawm.service.UtilisateurService;
+import com.lus.dawm.utils.DataStore;
+import com.lus.dawm.utils.EMFUtil;
 
 @WebServlet("/login")
 public class UtilisateurController extends HttpServlet {
@@ -28,50 +33,50 @@ public class UtilisateurController extends HttpServlet {
 		HttpSession session = req.getSession();
 		Utilisateur user = (Utilisateur) session.getAttribute("user");
 		resp.setContentType("text/html");
-		
+
 		PrintWriter pw = resp.getWriter();
-		
-		if(user == null) {
+
+		if (user == null) {
 			resp.sendRedirect("./auth/login.html");
-		}else {
+		} else {
 			resp.sendRedirect("./home.jsp");
 		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+// create Entity Manager with initial it 
+		EntityManager em = EMFUtil.getEMFactory().createEntityManager();
+// get request data (username, password)
 		String username = req.getParameter("username");
 		String password = req.getParameter("pwd");
-		
-		HttpSession session = req.getSession();
-		
+
 		resp.setContentType("text/html");
+		PrintWriter pw = resp.getWriter();
 		
-		PrintWriter pw = resp.getWriter();  
-		Utilisateur us = new Utilisateur();
+		Utilisateur user = new Utilisateur();
+
+		em.getTransaction().begin();
+
 		try {
-			DAOUtilisateur daoU = new DAOUtilisateur();
-			us = daoU.auth(username, password);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+
+			Query query = em.createQuery("select c from Utilisateur c where c.username = :username and c.pwd = :pwd");
+			query.setParameter("username", username);
+			query.setParameter("pwd", password);
+			user = (Utilisateur) query.getSingleResult();
+			em.close();
+		} catch (Exception e) {
+			System.out.println(e.toString());
 		}
-		
-		
-		if(us.getUsername() != null) {
+
+		if (user.getUsername() != null) {
 			resp.sendRedirect("./admin/dashboard.jsp");
-			Utilisateur user = new Utilisateur();
 			user.setUsername("Ayyoub Elachagui");
-			user.setPwd(password);
-			session.setAttribute("user", user);
-		}else {
+			DataStore.setUser(user);
+		} else {
 			pw.write("<a href='./auth/login.html'>Login ou mot de passe incorrects !</a>");
 		}
-		
-		
+
 	}
-	
-	
-	
-	
 
 }

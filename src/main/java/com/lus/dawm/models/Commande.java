@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class Commande implements Serializable{
 	@Id
-	private long id;
+	private Long id;
 	private LocalDateTime dateCreation;
 	private LocalDateTime dateLivraison;
 	private String adresseLivraison;

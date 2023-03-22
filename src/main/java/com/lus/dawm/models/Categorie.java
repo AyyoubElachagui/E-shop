@@ -3,7 +3,6 @@ package com.lus.dawm.models;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,17 +10,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Categorie {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	private String designation;
 	private String description;
+	
+	@OneToMany(mappedBy = "parentCategorie")
+	private List<Categorie> subCategorie;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Categorie categorie;
+	@OneToOne
+	private Categorie parentCategorie;
 
 	@ManyToMany
 	@JoinTable(
@@ -39,12 +43,24 @@ public class Categorie {
 		this.id = id;
 	}
 
-	public Categorie getCategorie() {
-		return categorie;
+	public Categorie getParentCategorie() {
+		return parentCategorie;
 	}
 
-	public void setCategorie(Categorie categorie) {
-		this.categorie = categorie;
+	public void setParentCategorie(Categorie parentCategorie) {
+		this.parentCategorie = parentCategorie;
+	}
+
+	public List<Categorie> getSubCategorie() {
+		return subCategorie;
+	}
+
+	public void setSubCategorie(List<Categorie> subCategorie) {
+		this.subCategorie = subCategorie;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public List<Produit> getProduits() {
