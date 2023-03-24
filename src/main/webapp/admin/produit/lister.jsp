@@ -1,3 +1,4 @@
+<%@page import="com.lus.dawm.models.Categorie"%>
 <%@page import="com.lus.dawm.utils.DataStore"%>
 <%@page import="com.lus.dawm.dao.DAOProduit"%>
 <%@page import="com.lus.dawm.models.Produit"%>
@@ -13,7 +14,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="body bg-white dark:bg-[#0F172A]">
-<% List<Produit> produits = DataStore.listProduits(); %>
+	<% List<Produit> produits = DataStore.listProduits(); %>
 
 	<jsp:include page="../../layouts/navbar.jsp"></jsp:include>
 	<jsp:include page="../../layouts/sidebar.jsp"></jsp:include>
@@ -87,19 +88,25 @@
 
 					<div class="mt-1 p-2">
 						<h2 class="text-slate-700"><%=produit.getDesignation()%></h2>
-						<p class="mt-1 text-sm text-slate-400"><%=produit.getDescription()%></p>
+						<%
+						if(produit.getCategories() != null){
+							for(Categorie cat : produit.getCategories()){
+								%>
+								<p class="mt-1 text-sm text-slate-400"><%=cat.getDesignation()%></p>
+								<%
+								}
+							}
+						%>
 
 						<div class="mt-3">
-							<p class="text-lg font-bold text-blue-500 mb-3">
-								$500</p>
+							<p class="text-lg font-bold text-blue-500 mb-3">$500</p>
 							<form action="<%request.getContextPath();%>/tp1/ajouter/panier"
 								method="POST">
 								<div
 									class="flex items-center space-x-1.5 rounded-lg bg-blue-500 px-4 py-1.5 text-white duration-100 hover:bg-blue-600">
 
 
-									<input type="hidden"
-										value="<%=produit.getId()%>"
+									<input type="hidden" value="<%=produit.getId()%>"
 										name="idpro_panier" />
 
 									<svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -116,27 +123,33 @@
 							</form>
 						</div>
 						<div class="mt-1">
-							<form action="<%request.getContextPath();%>/tp1/produit/supprimer"
+							<form
+								action="<%request.getContextPath();%>/tp1/produit/supprimer"
 								method="POST">
 								<div
 									class="flex items-center space-x-1.5 rounded-lg bg-red-500 px-4 py-1.5 text-white duration-100 hover:bg-red-600">
 
 
-									<input type="hidden"
-										value="<%=produit.getId()%>"
-										name="idPro" />
+									<input type="hidden" value="<%=produit.getId()%>" name="idPro" />
 
-									<svg class="h-4 w-4" viewBox="0 0 1024 1024" fill="#ffffff" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+									<svg class="h-4 w-4" viewBox="0 0 1024 1024" fill="#ffffff"
+										class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg"
+										stroke="#ffffff">
 									
-										<g id="SVGRepo_bgCarrier" stroke-width="0"/>
+										<g id="SVGRepo_bgCarrier" stroke-width="0" />
 										
-										<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+										<g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+											stroke-linejoin="round" />
 										
 										<g id="SVGRepo_iconCarrier">
 										
-										<path d="M32 241.6c-11.2 0-20-8.8-20-20s8.8-20 20-20l940 1.6c11.2 0 20 8.8 20 20s-8.8 20-20 20L32 241.6zM186.4 282.4c0-11.2 8.8-20 20-20s20 8.8 20 20v688.8l585.6-6.4V289.6c0-11.2 8.8-20 20-20s20 8.8 20 20v716.8l-666.4 7.2V282.4z" fill=""/>
+										<path
+											d="M32 241.6c-11.2 0-20-8.8-20-20s8.8-20 20-20l940 1.6c11.2 0 20 8.8 20 20s-8.8 20-20 20L32 241.6zM186.4 282.4c0-11.2 8.8-20 20-20s20 8.8 20 20v688.8l585.6-6.4V289.6c0-11.2 8.8-20 20-20s20 8.8 20 20v716.8l-666.4 7.2V282.4z"
+											fill="" />
 										
-										<path d="M682.4 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM367.2 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM524.8 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM655.2 213.6v-48.8c0-17.6-14.4-32-32-32H418.4c-18.4 0-32 14.4-32 32.8V208h-40v-42.4c0-40 32.8-72.8 72.8-72.8H624c40 0 72.8 32.8 72.8 72.8v48.8h-41.6z" fill=""/>
+										<path
+											d="M682.4 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM367.2 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM524.8 867.2c-11.2 0-20-8.8-20-20V372c0-11.2 8.8-20 20-20s20 8.8 20 20v475.2c0.8 11.2-8.8 20-20 20zM655.2 213.6v-48.8c0-17.6-14.4-32-32-32H418.4c-18.4 0-32 14.4-32 32.8V208h-40v-42.4c0-40 32.8-72.8 72.8-72.8H624c40 0 72.8 32.8 72.8 72.8v48.8h-41.6z"
+											fill="" />
 										
 										</g>
 									

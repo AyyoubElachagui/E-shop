@@ -84,7 +84,7 @@
 
 					<div class="mt-1 p-2">
 						<h2 class="text-slate-700"><%=categorie.getDesignation()%></h2>
-						<p class="mt-1 text-sm text-slate-400"><%=categorie.getDesignation()%></p>
+						<p class="mt-1 text-sm text-slate-400"><%=categorie.getParentCategorie() == null ? "---------" : categorie.getParentCategorie().getDesignation()%></p>
 
 						<div class="mt-3 flex items-end justify-between">
 							<div

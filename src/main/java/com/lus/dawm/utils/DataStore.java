@@ -69,6 +69,10 @@ public class DataStore {
 		List<Categorie> categories = new ArrayList<Categorie>();
 		try {
 			categories = (List<Categorie>) query.getResultList();
+			System.out.println("------------------------ updated ************ ");
+			for(Categorie categorie: categories) {
+				System.out.println("**** "+categorie.getDesignation()+" ****");
+			}
 			return categories;
 		}catch(Exception e) {
 			return categories;

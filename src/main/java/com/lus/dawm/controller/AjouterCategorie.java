@@ -1,6 +1,7 @@
 package com.lus.dawm.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -24,6 +25,7 @@ public class AjouterCategorie extends HttpServlet{
 		
 		String designation = req.getParameter("designation");
 		String description = req.getParameter("description");
+		Long idCatSelected = Long.parseLong(req.getParameter("categorie"));
 		
 		Categorie categorie = new Categorie();
 		categorie.setDesignation(designation);
@@ -31,6 +33,15 @@ public class AjouterCategorie extends HttpServlet{
 
 		
 		em.getTransaction().begin();
+		
+
+		
+		if(idCatSelected != -1) {
+			Categorie parentCat = em.find(Categorie.class, idCatSelected);
+			if(parentCat != null) {
+				categorie.setParentCategorie(parentCat);
+			}
+		}
 		
 		em.persist(categorie);
 		
