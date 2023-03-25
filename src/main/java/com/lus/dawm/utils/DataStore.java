@@ -69,15 +69,35 @@ public class DataStore {
 		List<Categorie> categories = new ArrayList<Categorie>();
 		try {
 			categories = (List<Categorie>) query.getResultList();
-			System.out.println("------------------------ updated ************ ");
-			for(Categorie categorie: categories) {
-				System.out.println("**** "+categorie.getDesignation()+" ****");
-			}
 			return categories;
 		}catch(Exception e) {
 			return categories;
 			
 		}
 	}
+	
+	public static List<Produit> listProduitsByCategorie(Long idCat){
+		Query query = em.createQuery("SELECT p FROM Produit p");
+		List<Produit> produits = new ArrayList<Produit>();
+		
+		Categorie categorie = em.find(Categorie.class, idCat);
+		
+		
+		try {
+			List<Produit> lP = (List<Produit>) query.getResultList();
+			if(categorie != null) {
+				for(Produit pro: lP) {
+					if(pro.getCategories().contains(categorie)) {
+						produits.add(pro);
+					}
+				}
+			}
+			return produits;
+		}catch(Exception e) {
+			return produits;
+			
+		}
+	}
+	
 	
 }

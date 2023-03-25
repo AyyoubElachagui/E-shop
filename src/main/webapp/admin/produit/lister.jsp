@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.lus.dawm.models.Categorie"%>
 <%@page import="com.lus.dawm.utils.DataStore"%>
 <%@page import="com.lus.dawm.dao.DAOProduit"%>
@@ -14,7 +15,19 @@
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="body bg-white dark:bg-[#0F172A]">
-	<% List<Produit> produits = DataStore.listProduits(); %>
+	<% 
+	
+	String idCat = request.getParameter("id_cat");
+	List<Produit> produits = new ArrayList<Produit>();
+	if(idCat == null){
+		List<Produit> lP = DataStore.listProduits(); 
+		produits.addAll(lP);
+	}else{
+		List<Produit> lP = DataStore.listProduitsByCategorie(Long.parseLong(idCat)); 
+		produits.addAll(lP);
+	}
+	
+	%>
 
 	<jsp:include page="../../layouts/navbar.jsp"></jsp:include>
 	<jsp:include page="../../layouts/sidebar.jsp"></jsp:include>
@@ -77,6 +90,11 @@
 			<div
 				class="mx-auto grid max-w-6xl  grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 				<%
+				if(produits.size() == 0){
+					%>
+						<h3>pas de produits dans cette categorie </h3>
+					<%
+				}
 				for (Produit produit : produits) {
 				%>
 				<article
